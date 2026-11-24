@@ -3,6 +3,7 @@ name = "disk-heatmap"
 version = "0.2.0"
 description = "See what fills your drive and what is safe to clean"
 edition = "2021"
+license = "MIT"
 
 [lib]
 name = "disk_heatmap_lib"
