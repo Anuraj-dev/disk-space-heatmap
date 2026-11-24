@@ -36,7 +36,10 @@ Windows is the only target, and GitHub Actions does the building:
   git tag "v$v" && git push origin "v$v"
   ```
 
-  It refuses a tag that isn't `vX.Y.Z`, isn't on `main` or doesn't match `Cargo.toml`, then builds the installer and publishes a GitHub Release with `Disk-Heatmap-Setup-x64.exe` and `Disk-Heatmap-X.Y.Z-Setup-x64.exe`. To respin, re-run the failed jobs.
+  It refuses a tag that isn't `vX.Y.Z`, isn't on `main` or doesn't match `Cargo.toml`, then builds and signs the installer and publishes a GitHub Release with `Disk-Heatmap-Setup-x64.exe`, `Disk-Heatmap-X.Y.Z-Setup-x64.exe` and `latest.json`. To respin, re-run the failed jobs.
+
+- **Updates**: a release build checks `releases/latest/download/latest.json` once at start, downloads a newer installer in the background, verifies its signature against `plugins.updater.pubkey` in `src-tauri/tauri.conf.json`, and shows **Update to X.Y.Z** in the header. Clicking it runs the installer (passive mode) and relaunches.
+- **Signing key**: the updater key is a minisign pair, separate from Authenticode (the installer itself is not code-signed, so SmartScreen warns on first run). The release job refuses to run without the `TAURI_SIGNING_PRIVATE_KEY` and `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` repo secrets. Keep an offline backup of the private key and its password: if they are lost, installed copies can never accept another update, and users would have to reinstall by hand.
 
 ## Adding a rule
 

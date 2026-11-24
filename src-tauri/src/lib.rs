@@ -1,6 +1,7 @@
 mod drives;
 mod rules;
 mod scan;
+mod updater;
 
 use serde::Serialize;
 use std::path::{Path, PathBuf};
@@ -145,17 +146,35 @@ fn open_in_explorer(path: String) -> Result<(), String> {
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
+#[tauri::command]
+fn pending_update(app: AppHandle) -> Option<String> {
+    updater::pending_version(&app)
+}
+
+#[tauri::command]
+fn install_update(app: AppHandle) -> Result<(), String> {
+    updater::install(&app)
+}
+
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(AppState::default())
+        .manage(updater::UpdaterState::default())
         .invoke_handler(tauri::generate_handler![
             list_drives,
             scan_drive,
             cancel_scan,
             find_cleanup,
             clean_item,
-            open_in_explorer
+            open_in_explorer,
+            pending_update,
+            install_update
         ])
+        .setup(|app| {
+            updater::start(app.handle());
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running Disk Heatmap");
 }

@@ -72,6 +72,7 @@ export default function App() {
   const [cleanup, setCleanup] = useState<CleanupItem[] | null>(null);
   const [cleanupErr, setCleanupErr] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [update, setUpdate] = useState<{ version: string; installing: boolean } | null>(null);
   const nav = useTrailHistory();
   const { trail } = nav;
   const current = trail[trail.length - 1];
@@ -92,6 +93,27 @@ export default function App() {
       un.then((f) => f());
     };
   }, []);
+
+  // A verified update downloads in the background; ask too, in case it
+  // finished before this listener existed.
+  useEffect(() => {
+    const ready = (version: string | null) => version && setUpdate((u) => u ?? { version, installing: false });
+    const un = listen<string>("update-ready", (e) => ready(e.payload));
+    invoke<string | null>("pending_update").then(ready).catch(() => {});
+    return () => {
+      un.then((f) => f());
+    };
+  }, []);
+
+  const installUpdate = () => {
+    if (!update) return;
+    setUpdate({ ...update, installing: true });
+    // On success the installer closes this window, so only failure returns.
+    invoke("install_update").catch((e) => {
+      setUpdate({ ...update, installing: false });
+      setError(String(e));
+    });
+  };
 
   const loadCleanup = useCallback((drive: Drive) => {
     setCleanup(null);
@@ -269,6 +291,16 @@ export default function App() {
               <I.Rescan /> Rescan
             </button>
           </>
+        )}
+        {update && (
+          <button
+            className="tool update"
+            onClick={installUpdate}
+            disabled={update.installing || view.kind === "scanning"}
+            title="Install the new version and restart Disk Heatmap"
+          >
+            {update.installing ? "Updating…" : `Update to ${update.version}`}
+          </button>
         )}
         <button
           className="icon"

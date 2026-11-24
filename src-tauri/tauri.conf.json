@@ -32,5 +32,16 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDJDRTc0MzU2MjA1Q0UyNzQKUldSMDRsd2dWa1BuTENYRlRrRENOS3hqS3ZSZUtPYkFjRFhhdGJ6RjVQb0VWMklMcHBEOW1CQ3YK",
+      "endpoints": [
+        "https://github.com/Anuraj-dev/disk-space-heatmap/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      }
+    }
   }
 }
