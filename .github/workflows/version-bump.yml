@@ -1,0 +1,136 @@
+name: Version bump
+
+# Every merge to main that carries release-worthy Conventional Commits bumps the
+# version and commits it back, so main is always tag-ready. It never tags and
+# never publishes: a release is a deliberate `git push origin v<version>`
+# (README, "Releasing").
+#
+# The version lives in src-tauri/Cargo.toml (tauri.conf.json has no version of
+# its own, so Tauri reads Cargo's) plus that crate's entry in Cargo.lock.
+# feat => minor, fix/perf => patch, `type!:` or a BREAKING CHANGE footer =>
+# major; docs/chore/ci/test/style/refactor do not bump.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Force a bump type (skips Conventional Commit detection)
+        type: choice
+        required: true
+        default: patch
+        options: [patch, minor, major]
+
+permissions:
+  contents: read
+
+# Two pushes never interleave their bump and push.
+concurrency:
+  group: version-bump
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  bump:
+    name: Bump version
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    # Never bump on the bump commit itself. head_commit is null on
+    # workflow_dispatch, where startsWith(null, ...) is false, so dispatch runs.
+    if: >-
+      github.actor != 'github-actions[bot]' &&
+      !startsWith(github.event.head_commit.message, 'chore(release):')
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect bump type and compute the new version
+        id: detect
+        env:
+          # Event values go through env, never inlined into the script.
+          EVENT: ${{ github.event_name }}
+          SHA: ${{ github.sha }}
+          DISPATCH_BUMP: ${{ github.event.inputs.bump }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin main
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse FETCH_HEAD)" ]; then
+            echo "::notice::main moved past this commit; the newer run bumps instead"
+            exit 0
+          fi
+
+          # Classify everything since the last release marker (the newer of the
+          # last bump commit and the last v* tag), not just this push, so a
+          # skipped run never loses commits.
+          a=$(git log --grep='^chore(release):' --format='%H' -n 1 || true)
+          b=$(git describe --tags --abbrev=0 --match 'v*' 2>/dev/null || true)
+          [ -n "$b" ] && b=$(git rev-parse "${b}^{commit}")
+          if [ -n "$a" ] && [ -n "$b" ]; then
+            if git merge-base --is-ancestor "$a" "$b"; then base=$b; else base=$a; fi
+          else
+            base=${a:-$b}
+          fi
+          if [ -n "$base" ]; then rng="${base}..${SHA}"; else rng="${SHA}^..${SHA}"; fi
+
+          level=0  # 0 none, 1 patch, 2 minor, 3 major
+          if [ "$EVENT" = workflow_dispatch ]; then
+            case "$DISPATCH_BUMP" in major) level=3 ;; minor) level=2 ;; patch) level=1 ;; esac
+          else
+            if git log --format='%B' "$rng" | grep -qE '^BREAKING[ -]CHANGE(\(.*\))?:'; then level=3; fi
+            while IFS= read -r s; do
+              if printf '%s' "$s" | grep -qE '^[a-z]+(\([^)]+\))?!:'; then l=3
+              elif printf '%s' "$s" | grep -qE '^feat(\([^)]+\))?:'; then l=2
+              elif printf '%s' "$s" | grep -qE '^(fix|perf)(\([^)]+\))?:'; then l=1
+              else l=0; fi
+              [ "$l" -gt "$level" ] && level=$l
+            done < <(git log --format='%s' "$rng")
+          fi
+          if [ "$level" -eq 0 ]; then
+            echo "no release-worthy commits in $rng; no bump"
+            exit 0
+          fi
+
+          cur=$(grep -m1 -E '^version = "[0-9]+\.[0-9]+\.[0-9]+"' src-tauri/Cargo.toml | cut -d'"' -f2)
+          IFS=. read -r MA MI PA <<< "$cur"
+          case "$level" in
+            3) MA=$((MA + 1)); MI=0; PA=0 ;;
+            2) MI=$((MI + 1)); PA=0 ;;
+            1) PA=$((PA + 1)) ;;
+          esac
+          echo "version $cur -> $MA.$MI.$PA (range $rng)"
+          echo "new_version=$MA.$MI.$PA" >> "$GITHUB_OUTPUT"
+
+      - name: Write the new version
+        if: steps.detect.outputs.new_version != ''
+        env:
+          NEW_VERSION: ${{ steps.detect.outputs.new_version }}
+        run: |
+          set -euo pipefail
+          # Package version is at column 0; dependency versions are inline tables.
+          sed -i -E 's/^version = "[0-9]+\.[0-9]+\.[0-9]+"/version = "'"$NEW_VERSION"'"/' src-tauri/Cargo.toml
+          sed -i -E '/^name = "disk-heatmap"$/{n;s/^version = "[0-9]+\.[0-9]+\.[0-9]+"$/version = "'"$NEW_VERSION"'"/;}' src-tauri/Cargo.lock
+          # The lock must still match the manifest, and nothing else may change.
+          cargo metadata --manifest-path src-tauri/Cargo.toml --locked --format-version 1 > /dev/null
+          changed=$(git diff --name-only | sort | tr '\n' ' ')
+          if [ "$changed" != "src-tauri/Cargo.lock src-tauri/Cargo.toml " ]; then
+            echo "refusing: the bump changed: $changed" >&2
+            exit 1
+          fi
+
+      - name: Commit and push
+        if: steps.detect.outputs.new_version != ''
+        env:
+          NEW_VERSION: ${{ steps.detect.outputs.new_version }}
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit -am "chore(release): bump version to ${NEW_VERSION}"
+          git push origin HEAD:main

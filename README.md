@@ -22,6 +22,22 @@ To produce an installer: `npm run tauri build` (output in `src-tauri/target/rele
 - **Side panel** (`src/Panel.tsx`): details for the tile under the pointer (or the current folder), the known caches grouped into "Safe to clean" and "Your call" (each with its path, explanation and Clean button), and the drive's free space.
 - **Cleanup advice** (`src-tauri/rules.json`, `src-tauri/src/rules.rs`): each rule has path patterns (`%ENV%`, `{DRIVE}`, and `*` within one folder name), a verdict (`safe` / `your-call` / `keep`), an explanation and how to free the space. Deletion is offered only for `safe` rules that have an action, always after an in-app confirm. The backend resolves the paths again itself, so the UI can't point a delete anywhere else.
 
+## Releasing
+
+Windows is the only target, and GitHub Actions does the building:
+
+- **CI** (`.github/workflows/ci.yml`): every PR and push to `main` runs clippy, the tests and an NSIS build on `windows-latest`. The installer is attached to the run as an artifact.
+- **PR titles** are Conventional Commits (`feat(ui): …`, `fix(scan): …`), checked by `pr-title.yml`. Squash-merge, so the title becomes the commit on `main`.
+- **Version bump** (`version-bump.yml`): after each merge, `feat` bumps the minor, `fix`/`perf` the patch, `type!:` or a `BREAKING CHANGE:` footer the major, and the bot commits `chore(release): bump version to X.Y.Z`. Other types don't bump. The version lives only in `src-tauri/Cargo.toml` (and its `Cargo.lock` entry).
+- **Release** (`release.yml`): tag the bump commit and push the tag:
+
+  ```sh
+  git pull && v=$(grep -m1 '^version' src-tauri/Cargo.toml | cut -d'"' -f2)
+  git tag "v$v" && git push origin "v$v"
+  ```
+
+  It refuses a tag that isn't `vX.Y.Z`, isn't on `main` or doesn't match `Cargo.toml`, then builds the installer and publishes a GitHub Release with `Disk-Heatmap-Setup-x64.exe` and `Disk-Heatmap-X.Y.Z-Setup-x64.exe`. To respin, re-run the failed jobs.
+
 ## Adding a rule
 
 Add an entry to `src-tauri/rules.json` and restart. Use `"action": "delete_contents"` to empty a folder but keep the folder itself, or `null` for advice only.

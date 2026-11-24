@@ -1,0 +1,110 @@
+name: Release
+
+# On a strict v<major>.<minor>.<patch> tag pushed from main:
+#   validate -> build (Windows NSIS installer) -> publish (GitHub Release)
+# The tag must sit on main and match src-tauri/Cargo.toml, which version-bump.yml
+# keeps current. Re-running build + publish respins a release (uploads clobber).
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  validate:
+    name: Validate release tag
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.check.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Strict semver tag, on main, matching the app version
+        id: check
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          if ! printf '%s' "$TAG" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::tag '$TAG' is not a strict v<major>.<minor>.<patch> tag"
+            exit 1
+          fi
+          git fetch --no-tags origin main
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" FETCH_HEAD; then
+            echo "::error::tag commit $GITHUB_SHA is not on main"
+            exit 1
+          fi
+          app=$(grep -m1 -E '^version = ' src-tauri/Cargo.toml | cut -d'"' -f2)
+          if [ "$app" != "${TAG#v}" ]; then
+            echo "::error::src-tauri/Cargo.toml is $app but the tag is $TAG; tag the version-bump commit"
+            exit 1
+          fi
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build Windows installer
+    needs: validate
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install UI dependencies
+        run: npm ci
+      - name: Build NSIS installer
+        run: npx tauri build --bundles nsis -- --locked
+      - name: Collect the installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          setup=(src-tauri/target/release/bundle/nsis/*-setup.exe)
+          [ "${#setup[@]}" -eq 1 ] || { echo "expected one installer, found ${#setup[@]}" >&2; exit 1; }
+          mkdir -p out && cp "${setup[0]}" out/Disk-Heatmap-Setup-x64.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-release
+          path: out/
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    name: Publish GitHub Release
+    needs: [validate, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: windows-release
+          path: dist
+      - name: Create the release and attach the installer
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          VERSION: ${{ needs.validate.outputs.version }}
+        run: |
+          set -euo pipefail
+          cd dist
+          # The stable name backs a releases/latest/download link; the versioned
+          # copy keeps old downloads distinguishable.
+          cp Disk-Heatmap-Setup-x64.exe "Disk-Heatmap-${VERSION}-Setup-x64.exe"
+          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag \
+              --title "Disk Heatmap ${VERSION}" --generate-notes
+          fi
+          gh release upload "$TAG" --repo "$GITHUB_REPOSITORY" --clobber \
+            Disk-Heatmap-Setup-x64.exe "Disk-Heatmap-${VERSION}-Setup-x64.exe"
