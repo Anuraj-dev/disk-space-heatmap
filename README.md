@@ -17,7 +17,9 @@ To produce an installer: `npm run tauri build` (output in `src-tauri/target/rele
 
 - **Drives**: `sysinfo` lists volumes with used/free space.
 - **Scanner** (`src-tauri/src/scan.rs`): parallel `read_dir` walk on a rayon pool. On Windows the per-entry metadata comes from the directory listing itself, so there's no extra syscall per file. It skips symlinks, junctions and other reparse-point folders, counts OneDrive cloud-only files as 0 bytes, and folds anything under 100 MB into an "other small items" bucket as it goes. Progress is emitted as `scan-progress` events about 8 times a second.
-- **Treemap** (`src/Treemap.tsx`, `src/lib.ts`): squarified layout with log-scale heat colours from pale yellow to deep red. Click a folder to drill in, use the breadcrumbs to go back, right-click to show it in Explorer.
+- **Treemap** (`src/Treemap.tsx`, `src/lib.ts`): nested squarified layout, disktree-style. Folders draw their contents inside a title strip, 3 levels deep by default (`[` / `]` or the Depth control, 1–6). Tiles are tinted by kind, guessed from the folder or file name (apps, games, code, cache, media, documents, system), and get lighter (dark theme) or darker (light theme) on a log scale as they get bigger. Folders a cleanup rule marks safe are hatched; "your call" ones get a sparser hatch. Click a folder to zoom in, click a file or right-click anything to show it in Explorer.
+- **Navigation** (`src/App.tsx`): browser-style history. Back / Forward buttons, the mouse side buttons, Alt+←/→ and the keyboard's browser keys move through it like Chrome; Backspace goes up one folder; breadcrumbs jump to any parent. Rescan returns to the folder you were in.
+- **Side panel** (`src/Panel.tsx`): details for the tile under the pointer (or the current folder), a ranked "Worth a look" list of known caches with their explanation and Clean button, and the drive's free space.
 - **Cleanup advice** (`src-tauri/rules.json`, `src-tauri/src/rules.rs`): each rule has path patterns (`%ENV%`, `{DRIVE}`, and `*` within one folder name), a verdict (`safe` / `your-call` / `keep`), an explanation and how to free the space. Deletion is offered only for `safe` rules that have an action, always after an in-app confirm. The backend resolves the paths again itself, so the UI can't point a delete anywhere else.
 
 ## Adding a rule
@@ -27,5 +29,5 @@ Add an entry to `src-tauri/rules.json` and restart. Use `"action": "delete_conte
 ## Known limits / next steps
 
 - Sizes are logical file sizes; hard links (WinSxS) are counted more than once.
-- Folders you can't read without admin rights are skipped (the count appears in the status bar).
+- Folders you can't read without admin rights are skipped (the count appears above the map).
 - Next: read the NTFS MFT directly when running as admin, for WizTree-style scans that finish in seconds.
