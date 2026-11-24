@@ -1,0 +1,141 @@
+{
+  "_comment": "Cleanup rules. paths: %ENV% vars and {DRIVE} (e.g. C:) are expanded; '*' matches within one folder name. verdict: safe | your-call | keep. action: delete_contents | empty_recycle_bin | null. The app only offers deletion when verdict is 'safe' and an action is set.",
+  "rules": [
+    {
+      "id": "nvidia-dxcache",
+      "app": "NVIDIA graphics driver",
+      "title": "NVIDIA shader cache (DXCache / GLCache)",
+      "paths": ["%LOCALAPPDATA%\\NVIDIA\\DXCache", "%LOCALAPPDATA%\\NVIDIA\\GLCache"],
+      "verdict": "safe",
+      "explanation": "Compiled shaders the driver saves so games load faster. It is rebuilt automatically; the first launch of each game afterwards may stutter briefly.",
+      "how_to_free": "Delete the folder contents here, or turn on 'Shader Cache Size' limits in the NVIDIA Control Panel.",
+      "action": "delete_contents"
+    },
+    {
+      "id": "nvidia-ota",
+      "app": "NVIDIA App",
+      "title": "NVIDIA App downloaded updates (ota-artifacts)",
+      "paths": [
+        "%PROGRAMDATA%\\NVIDIA Corporation\\NVIDIA App\\UpdateFramework\\ota-artifacts",
+        "%PROGRAMDATA%\\NVIDIA Corporation\\*\\ota-artifacts"
+      ],
+      "verdict": "safe",
+      "explanation": "Installer packages the NVIDIA App already downloaded and applied. Old ones are not needed once the update is installed.",
+      "how_to_free": "Delete the contents. Needs the app to be run as administrator if access is denied.",
+      "action": "delete_contents"
+    },
+    {
+      "id": "chrome-optguide",
+      "app": "Google Chrome",
+      "title": "Chrome on-device AI model (OptGuideOnDeviceModel)",
+      "paths": ["%LOCALAPPDATA%\\Google\\Chrome\\User Data\\OptGuideOnDeviceModel"],
+      "verdict": "your-call",
+      "explanation": "A local AI model (Gemini Nano) Chrome downloads for features like 'Help me write'. Deleting it alone doesn't help: Chrome downloads it again.",
+      "how_to_free": "In Chrome open chrome://flags, set 'Enables optimization guide on device' to Disabled, restart Chrome, then delete this folder.",
+      "action": null
+    },
+    {
+      "id": "crashdumps",
+      "app": "Windows",
+      "title": "Application crash dumps",
+      "paths": ["%LOCALAPPDATA%\\CrashDumps"],
+      "verdict": "safe",
+      "explanation": "Memory snapshots saved when programs crashed. Only useful if you are sending them to a developer.",
+      "how_to_free": "Delete the contents.",
+      "action": "delete_contents"
+    },
+    {
+      "id": "user-temp",
+      "app": "Windows",
+      "title": "Your temporary files (%TEMP%)",
+      "paths": ["%TEMP%"],
+      "verdict": "safe",
+      "explanation": "Scratch files programs leave behind. Files currently in use are skipped automatically.",
+      "how_to_free": "Delete the contents, or use Settings > System > Storage > Temporary files.",
+      "action": "delete_contents"
+    },
+    {
+      "id": "npm-cache",
+      "app": "Node.js / npm",
+      "title": "npm package cache",
+      "paths": ["%LOCALAPPDATA%\\npm-cache"],
+      "verdict": "safe",
+      "explanation": "Copies of every package npm has downloaded. npm re-downloads what it needs on the next install.",
+      "how_to_free": "Delete the contents, or run: npm cache clean --force",
+      "action": "delete_contents"
+    },
+    {
+      "id": "vscode-vsix",
+      "app": "Visual Studio Code",
+      "title": "VS Code cached extension installers",
+      "paths": ["%APPDATA%\\Code\\CachedExtensionVSIXs", "%APPDATA%\\Code\\Cache", "%APPDATA%\\Code\\CachedData"],
+      "verdict": "safe",
+      "explanation": "Old extension installers and web caches VS Code keeps around. Your installed extensions and settings are not here.",
+      "how_to_free": "Close VS Code, then delete the contents.",
+      "action": "delete_contents"
+    },
+    {
+      "id": "recycle-bin",
+      "app": "Windows",
+      "title": "Recycle Bin",
+      "paths": ["{DRIVE}\\$Recycle.Bin"],
+      "verdict": "safe",
+      "explanation": "Files you already deleted. They still take space until the bin is emptied.",
+      "how_to_free": "Empty the Recycle Bin (check nothing in it is still needed).",
+      "action": "empty_recycle_bin"
+    },
+    {
+      "id": "ubisoft-patch",
+      "app": "Ubisoft Connect",
+      "title": "Ubisoft Connect patch & cache files",
+      "paths": [
+        "%PROGRAMFILES(X86)%\\Ubisoft\\Ubisoft Game Launcher\\cache",
+        "%PROGRAMFILES(X86)%\\Ubisoft\\Ubisoft Game Launcher\\patch"
+      ],
+      "verdict": "safe",
+      "explanation": "Downloaded launcher/game patches and cached data that have already been applied. Your installed games and saves live elsewhere.",
+      "how_to_free": "Quit Ubisoft Connect, then delete the contents. May need administrator rights.",
+      "action": "delete_contents"
+    },
+    {
+      "id": "lghub-cache",
+      "app": "Logitech G HUB",
+      "title": "Logitech G HUB update cache",
+      "paths": ["%PROGRAMDATA%\\LGHUB\\cache", "%LOCALAPPDATA%\\LGHUB\\cache"],
+      "verdict": "safe",
+      "explanation": "Downloaded firmware and update packages G HUB has already installed. Your device profiles are stored separately.",
+      "how_to_free": "Quit G HUB from the tray, then delete the contents. May need administrator rights.",
+      "action": "delete_contents"
+    },
+    {
+      "id": "hiberfil",
+      "app": "Windows",
+      "title": "Hibernation file (hiberfil.sys)",
+      "paths": ["{DRIVE}\\hiberfil.sys"],
+      "verdict": "keep",
+      "explanation": "Holds your memory contents for hibernate and Fast Startup. Windows manages it; never delete it directly.",
+      "how_to_free": "If you never hibernate: open Terminal as administrator and run  powercfg /h off  (this also disables Fast Startup).",
+      "action": null
+    },
+    {
+      "id": "pagefile",
+      "app": "Windows",
+      "title": "Page file (pagefile.sys / swapfile.sys)",
+      "paths": ["{DRIVE}\\pagefile.sys", "{DRIVE}\\swapfile.sys"],
+      "verdict": "keep",
+      "explanation": "Virtual memory Windows uses when RAM is full. Removing it can cause crashes.",
+      "how_to_free": "Leave it. If you must, change its size in System Properties > Advanced > Performance > Virtual memory.",
+      "action": null
+    },
+    {
+      "id": "winsxs",
+      "app": "Windows",
+      "title": "Windows component store (WinSxS)",
+      "paths": ["{DRIVE}\\Windows\\WinSxS"],
+      "verdict": "keep",
+      "explanation": "System components and update backups. Many files are hard links shared with C:\\Windows, so the real size is smaller than shown. Deleting files here breaks Windows.",
+      "how_to_free": "Open Terminal as administrator and run  DISM /Online /Cleanup-Image /StartComponentCleanup",
+      "action": null
+    }
+  ]
+}
