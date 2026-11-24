@@ -147,7 +147,7 @@ pub fn find(drive: &str) -> Vec<CleanupItem> {
             });
         }
     }
-    items.sort_by(|a, b| b.size.cmp(&a.size));
+    items.sort_by_key(|a| std::cmp::Reverse(a.size));
     items
 }
 
