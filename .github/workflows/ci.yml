@@ -1,0 +1,63 @@
+name: CI
+
+# Every PR and every push to main: lint, test and build the NSIS installer on
+# Windows, the only platform the app ships for. The installer is uploaded as a
+# workflow artifact so a PR can be tried before it merges.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  windows:
+    name: Lint, test, build installer (Windows)
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+      - name: Install UI dependencies
+        run: npm ci
+      # Type-checks the UI, and generate_context! embeds ../dist, so the UI
+      # must exist before clippy.
+      - name: Build UI
+        run: npm run build
+      - name: Clippy
+        run: cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets --locked -- -D warnings
+      - name: Tests
+        run: cargo test --manifest-path src-tauri/Cargo.toml --locked
+      - name: Build NSIS installer
+        run: npx tauri build --bundles nsis -- --locked
+      - name: Collect the installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          setup=(src-tauri/target/release/bundle/nsis/*-setup.exe)
+          [ "${#setup[@]}" -eq 1 ] || { echo "expected one installer, found ${#setup[@]}" >&2; exit 1; }
+          mkdir -p out && cp "${setup[0]}" out/Disk-Heatmap-Setup-x64.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Disk-Heatmap-Setup-x64
+          path: out/Disk-Heatmap-Setup-x64.exe
+          if-no-files-found: error
+          retention-days: 14

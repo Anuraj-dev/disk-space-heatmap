@@ -169,7 +169,7 @@ pub fn scan_dir(path: &Path, min: u64, c: &Counters) -> Node {
             node.other_count += 1;
         }
     }
-    node.children.sort_by(|a, b| b.size.cmp(&a.size));
+    node.children.sort_by_key(|a| std::cmp::Reverse(a.size));
     node
 }
 
