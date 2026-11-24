@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Disk Heatmap social card</title>
+<!-- Source for og.png. Screenshot at 1200x630; see build-icons.sh. -->
+<style>
+@font-face { font-family: "Mona Sans"; src: url("fonts/mona-sans.woff2") format("woff2"); font-weight: 200 900; font-stretch: 75% 125%; }
+html, body { margin: 0; width: 1200px; height: 630px; background: #fff; overflow: hidden; }
+body { font-family: "Mona Sans", system-ui, sans-serif; display: grid; grid-template-columns: 1.55fr 1fr; gap: 10px; padding: 10px; box-sizing: border-box; }
+.b { border-radius: 5px; }
+.main { background: #b31228; color: #fff4c4; padding: 56px 60px; display: flex; flex-direction: column; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 16px; font-weight: 700; font-stretch: 112%; font-size: 30px; letter-spacing: -0.01em; }
+.brand img { width: 48px; height: 48px; border-radius: 6px; box-shadow: 0 0 0 3px #fff4c4; }
+h1 { margin: 0; font-weight: 790; font-stretch: 122%; font-size: 72px; line-height: 0.98; letter-spacing: -0.025em; }
+h1 span { color: #fcd371; display: block; }
+p { margin: 0; font-size: 24px; font-weight: 500; opacity: .9; }
+.side { display: grid; grid-template-rows: 1.5fr 1fr .62fr; gap: 10px; }
+.side > div { display: grid; gap: 10px; }
+.o { background: #e8552c; }
+.a { background: #fcd371; }
+.c { background: #fff4c4; }
+.r2 { grid-template-columns: 1.4fr 1fr; }
+.r3 { grid-template-columns: 1fr 1.2fr .7fr; }
+.hatch { background-image: repeating-linear-gradient(135deg, rgba(42,5,9,.28) 0 2px, transparent 2px 9px); }
+</style>
+</head>
+<body>
+  <div class="b main">
+    <div class="brand"><img src="icon-512.png" alt=""><span>Disk Heatmap</span></div>
+    <h1>See what fills your drive <span>and what's safe to clean</span></h1>
+    <p>Free for Windows 10 and 11. Scans locally.</p>
+  </div>
+  <div class="side">
+    <div class="b o"></div>
+    <div class="r2"><div class="b a"></div><div class="b a hatch"></div></div>
+    <div class="r3"><div class="b c"></div><div class="b o"></div><div class="b c"></div></div>
+  </div>
+</body>
+</html>

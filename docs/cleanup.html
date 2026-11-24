@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cleanup rules · Disk Heatmap</title>
+<meta name="description" content="Every cache and system file Disk Heatmap recognizes, its verdict, how to free the space, and exactly what the Clean button does.">
+<link rel="canonical" href="https://anuraj-dev.github.io/disk-space-heatmap/docs/cleanup.html">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#120d0e">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Disk Heatmap">
+<meta property="og:title" content="Cleanup rules · Disk Heatmap">
+<meta property="og:description" content="Every cache and system file Disk Heatmap recognizes, its verdict, how to free the space, and exactly what the Clean button does.">
+<meta property="og:url" content="https://anuraj-dev.github.io/disk-space-heatmap/docs/cleanup.html">
+<meta property="og:image" content="https://anuraj-dev.github.io/disk-space-heatmap/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../assets/fonts/mona-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js" defer></script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../" aria-label="Disk Heatmap home">
+      <img class="mark" src="../assets/logo.svg" alt="" width="26" height="26">
+      <span>Disk Heatmap</span>
+    </a>
+    <nav aria-label="Main">
+      <ul class="site-nav">
+        <li class="hide-sm"><a href="../#how">How it works</a></li>
+        <li class="hide-sm"><a href="../#cleanup">Cleanup</a></li>
+        <li><a href="./" aria-current="true">Docs</a></li>
+        <li><a class="gh" href="https://github.com/Anuraj-dev/disk-space-heatmap"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="hide-sm">GitHub</span><span class="sr-only">Source on GitHub</span></a></li>
+        <li><a class="nav-cta" href="../#download">Download</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="wrap docs-layout">
+  <nav class="docs-nav" aria-label="Docs">
+    <details open data-docs-nav>
+      <summary>Docs: Cleanup rules</summary>
+      <div class="mark-row" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <h2>Start</h2><ul><li><a href="index.html">Overview</a></li><li><a href="getting-started.html">Getting started</a></li></ul><h2>Use</h2><ul><li><a href="using.html">Reading the map</a></li><li><a href="cleanup.html" aria-current="page">Cleanup rules</a></li></ul><h2>Reference</h2><ul><li><a href="updating.html">Updating</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul>
+    </details>
+  </nav>
+  <main id="main" class="doc">
+    <h1>Cleanup rules</h1>
+    <p class="lead">Disk Heatmap recognizes a short list of caches and system files. For each one it finds, it explains what it is, gives a verdict, and says how to free the space.</p>
+    <nav class="toc" aria-labelledby="toc-h"><h2 id="toc-h">On this page</h2><ol><li><a href="#verdicts">Verdicts</a></li><li><a href="#clean">What Clean does</a></li><li><a href="#recycle-bin">The Recycle Bin</a></li><li><a href="#rules">All rules</a></li></ol></nav>
+    <h2 id="verdicts">Verdicts</h2>
+<ul>
+  <li><span class="verdict-tag"><i class="vmark vm-safe"></i>Safe to clean</span>: the files are rebuilt or re-downloaded when needed, or are leftovers nobody uses. These get a <b>Clean</b> button, and their tiles on the map are densely hatched.</li>
+  <li><span class="verdict-tag"><i class="vmark vm-call"></i>Your call</span>: removing it is possible but has a trade-off, or needs a step first. Advice only; sparsely hatched on the map.</li>
+  <li><span class="verdict-tag"><i class="vmark vm-keep"></i>Managed by Windows</span>: Windows needs it. The panel tells you the supported way to shrink it, if there is one. Advice only; this group starts collapsed.</li>
+</ul>
+<p>The list only shows rules that match something on the drive you scanned, largest first.</p>
+
+<h2 id="clean">What Clean does</h2>
+<ol>
+  <li>Open an item in the list and click <b>Clean</b>.</li>
+  <li>The item asks you to confirm, with the size and the number of files: <em>Permanently delete 5.30&nbsp;GB (48,213 files)? The folder stays; files in use are skipped.</em></li>
+  <li>Click <b>Clean</b> again to delete, or <b>Cancel</b>.</li>
+</ol>
+<ul>
+  <li><b>The folder itself stays;</b> only what's inside is deleted. Programs that expect the folder keep working.</li>
+  <li><b>Files in use are skipped.</b> The result tells you how much was freed and how many items were skipped, for example <em>Freed 5.30&nbsp;GB. 12 in-use items were skipped.</em> Close the program that uses them and clean again to get the rest.</li>
+  <li><b>Deleted files don't go to the Recycle Bin.</b> They're gone, which is why Clean only appears on items that are safe to lose.</li>
+  <li><b>The app checks the path again before deleting.</b> It works out each cache's location itself from the rule, so nothing on screen can point a delete anywhere else.</li>
+  <li>Links inside the folder (symlinks and junctions) are removed as links; what they point to is not touched.</li>
+</ul>
+<p>The free space under <b>Disk</b> and the list update straight away. The map redraws on the next <b>Rescan</b>.</p>
+
+<h2 id="recycle-bin">The Recycle Bin</h2>
+<p>The Recycle Bin of the scanned drive appears as a <em>Safe to clean</em> item with an <b>Empty bin</b> button. It asks first: <em>Empty the Recycle Bin? 6.70&nbsp;GB can't be restored afterwards.</em> Check nothing in it is still needed.</p>
+
+<h2 id="rules">All rules</h2>
+<p>Paths use Windows environment variables: <code>%LOCALAPPDATA%</code> is <code>C:\Users\you\AppData\Local</code>, <code>%APPDATA%</code> is <code>…\AppData\Roaming</code>, <code>%PROGRAMDATA%</code> is <code>C:\ProgramData</code>, and <code>{DRIVE}</code> is the drive you scanned. A <code>*</code> matches any one folder name.</p>
+<section class="rule" id="nvidia-dxcache">
+  <h3>NVIDIA shader cache (DXCache / GLCache)</h3>
+  <p class="meta"><span>NVIDIA graphics driver</span><span class="verdict-tag"><i class="vmark vm-safe"></i>Safe to clean</span></p>
+  <dl>
+    <dt>What it is</dt><dd>Compiled shaders the driver saves so games load faster. It is rebuilt automatically; the first launch of each game afterwards may stutter briefly.</dd>
+    <dt>How to free it</dt><dd>Delete the folder contents here, or turn on &#x27;Shader Cache Size&#x27; limits in the NVIDIA Control Panel.</dd>
+    <dt>In the app</dt><dd>Clean empties the folder and keeps it.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>%LOCALAPPDATA%\NVIDIA\DXCache</code></li><li><code>%LOCALAPPDATA%\NVIDIA\GLCache</code></li></ul></dd>
+  </dl>
+</section>
+<section class="rule" id="nvidia-ota">
+  <h3>NVIDIA App downloaded updates (ota-artifacts)</h3>
+  <p class="meta"><span>NVIDIA App</span><span class="verdict-tag"><i class="vmark vm-safe"></i>Safe to clean</span></p>
+  <dl>
+    <dt>What it is</dt><dd>Installer packages the NVIDIA App already downloaded and applied. Old ones are not needed once the update is installed.</dd>
+    <dt>How to free it</dt><dd>Delete the contents. Needs the app to be run as administrator if access is denied.</dd>
+    <dt>In the app</dt><dd>Clean empties the folder and keeps it.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>%PROGRAMDATA%\NVIDIA Corporation\NVIDIA App\UpdateFramework\ota-artifacts</code></li><li><code>%PROGRAMDATA%\NVIDIA Corporation\*\ota-artifacts</code></li></ul></dd>
+  </dl>
+</section>
+<section class="rule" id="crashdumps">
+  <h3>Application crash dumps</h3>
+  <p class="meta"><span>Windows</span><span class="verdict-tag"><i class="vmark vm-safe"></i>Safe to clean</span></p>
+  <dl>
+    <dt>What it is</dt><dd>Memory snapshots saved when programs crashed. Only useful if you are sending them to a developer.</dd>
+    <dt>How to free it</dt><dd>Delete the contents.</dd>
+    <dt>In the app</dt><dd>Clean empties the folder and keeps it.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>%LOCALAPPDATA%\CrashDumps</code></li></ul></dd>
+  </dl>
+</section>
+<section class="rule" id="user-temp">
+  <h3>Your temporary files (%TEMP%)</h3>
+  <p class="meta"><span>Windows</span><span class="verdict-tag"><i class="vmark vm-safe"></i>Safe to clean</span></p>
+  <dl>
+    <dt>What it is</dt><dd>Scratch files programs leave behind. Files currently in use are skipped automatically.</dd>
+    <dt>How to free it</dt><dd>Delete the contents, or use Settings &gt; System &gt; Storage &gt; Temporary files.</dd>
+    <dt>In the app</dt><dd>Clean empties the folder and keeps it.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>%TEMP%</code></li></ul></dd>
+  </dl>
+</section>
+<section class="rule" id="npm-cache">
+  <h3>npm package cache</h3>
+  <p class="meta"><span>Node.js / npm</span><span class="verdict-tag"><i class="vmark vm-safe"></i>Safe to clean</span></p>
+  <dl>
+    <dt>What it is</dt><dd>Copies of every package npm has downloaded. npm re-downloads what it needs on the next install.</dd>
+    <dt>How to free it</dt><dd>Delete the contents, or run: npm cache clean --force</dd>
+    <dt>In the app</dt><dd>Clean empties the folder and keeps it.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>%LOCALAPPDATA%\npm-cache</code></li></ul></dd>
+  </dl>
+</section>
+<section class="rule" id="vscode-vsix">
+  <h3>VS Code cached extension installers</h3>
+  <p class="meta"><span>Visual Studio Code</span><span class="verdict-tag"><i class="vmark vm-safe"></i>Safe to clean</span></p>
+  <dl>
+    <dt>What it is</dt><dd>Old extension installers and web caches VS Code keeps around. Your installed extensions and settings are not here.</dd>
+    <dt>How to free it</dt><dd>Close VS Code, then delete the contents.</dd>
+    <dt>In the app</dt><dd>Clean empties the folder and keeps it.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>%APPDATA%\Code\CachedExtensionVSIXs</code></li><li><code>%APPDATA%\Code\Cache</code></li><li><code>%APPDATA%\Code\CachedData</code></li></ul></dd>
+  </dl>
+</section>
+<section class="rule" id="recycle-bin">
+  <h3>Recycle Bin</h3>
+  <p class="meta"><span>Windows</span><span class="verdict-tag"><i class="vmark vm-safe"></i>Safe to clean</span></p>
+  <dl>
+    <dt>What it is</dt><dd>Files you already deleted. They still take space until the bin is emptied.</dd>
+    <dt>How to free it</dt><dd>Empty the Recycle Bin (check nothing in it is still needed).</dd>
+    <dt>In the app</dt><dd>Empty bin empties this drive's Recycle Bin.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>{DRIVE}\$Recycle.Bin</code></li></ul></dd>
+  </dl>
+</section>
+<section class="rule" id="ubisoft-patch">
+  <h3>Ubisoft Connect patch &amp; cache files</h3>
+  <p class="meta"><span>Ubisoft Connect</span><span class="verdict-tag"><i class="vmark vm-safe"></i>Safe to clean</span></p>
+  <dl>
+    <dt>What it is</dt><dd>Downloaded launcher/game patches and cached data that have already been applied. Your installed games and saves live elsewhere.</dd>
+    <dt>How to free it</dt><dd>Quit Ubisoft Connect, then delete the contents. May need administrator rights.</dd>
+    <dt>In the app</dt><dd>Clean empties the folder and keeps it.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>%PROGRAMFILES(X86)%\Ubisoft\Ubisoft Game Launcher\cache</code></li><li><code>%PROGRAMFILES(X86)%\Ubisoft\Ubisoft Game Launcher\patch</code></li></ul></dd>
+  </dl>
+</section>
+<section class="rule" id="lghub-cache">
+  <h3>Logitech G HUB update cache</h3>
+  <p class="meta"><span>Logitech G HUB</span><span class="verdict-tag"><i class="vmark vm-safe"></i>Safe to clean</span></p>
+  <dl>
+    <dt>What it is</dt><dd>Downloaded firmware and update packages G HUB has already installed. Your device profiles are stored separately.</dd>
+    <dt>How to free it</dt><dd>Quit G HUB from the tray, then delete the contents. May need administrator rights.</dd>
+    <dt>In the app</dt><dd>Clean empties the folder and keeps it.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>%PROGRAMDATA%\LGHUB\cache</code></li><li><code>%LOCALAPPDATA%\LGHUB\cache</code></li></ul></dd>
+  </dl>
+</section>
+<section class="rule" id="chrome-optguide">
+  <h3>Chrome on-device AI model (OptGuideOnDeviceModel)</h3>
+  <p class="meta"><span>Google Chrome</span><span class="verdict-tag"><i class="vmark vm-call"></i>Your call</span></p>
+  <dl>
+    <dt>What it is</dt><dd>A local AI model (Gemini Nano) Chrome downloads for features like &#x27;Help me write&#x27;. Deleting it alone doesn&#x27;t help: Chrome downloads it again.</dd>
+    <dt>How to free it</dt><dd>In Chrome open chrome://flags, set &#x27;Enables optimization guide on device&#x27; to Disabled, restart Chrome, then delete this folder.</dd>
+    <dt>In the app</dt><dd>None. Advice only.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>%LOCALAPPDATA%\Google\Chrome\User Data\OptGuideOnDeviceModel</code></li></ul></dd>
+  </dl>
+</section>
+<section class="rule" id="hiberfil">
+  <h3>Hibernation file (hiberfil.sys)</h3>
+  <p class="meta"><span>Windows</span><span class="verdict-tag"><i class="vmark vm-keep"></i>Managed by Windows</span></p>
+  <dl>
+    <dt>What it is</dt><dd>Holds your memory contents for hibernate and Fast Startup. Windows manages it; never delete it directly.</dd>
+    <dt>How to free it</dt><dd>If you never hibernate: open Terminal as administrator and run powercfg /h off (this also disables Fast Startup).</dd>
+    <dt>In the app</dt><dd>None. Advice only.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>{DRIVE}\hiberfil.sys</code></li></ul></dd>
+  </dl>
+</section>
+<section class="rule" id="pagefile">
+  <h3>Page file (pagefile.sys / swapfile.sys)</h3>
+  <p class="meta"><span>Windows</span><span class="verdict-tag"><i class="vmark vm-keep"></i>Managed by Windows</span></p>
+  <dl>
+    <dt>What it is</dt><dd>Virtual memory Windows uses when RAM is full. Removing it can cause crashes.</dd>
+    <dt>How to free it</dt><dd>Leave it. If you must, change its size in System Properties &gt; Advanced &gt; Performance &gt; Virtual memory.</dd>
+    <dt>In the app</dt><dd>None. Advice only.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>{DRIVE}\pagefile.sys</code></li><li><code>{DRIVE}\swapfile.sys</code></li></ul></dd>
+  </dl>
+</section>
+<section class="rule" id="winsxs">
+  <h3>Windows component store (WinSxS)</h3>
+  <p class="meta"><span>Windows</span><span class="verdict-tag"><i class="vmark vm-keep"></i>Managed by Windows</span></p>
+  <dl>
+    <dt>What it is</dt><dd>System components and update backups. Many files are hard links shared with C:\Windows, so the real size is smaller than shown. Deleting files here breaks Windows.</dd>
+    <dt>How to free it</dt><dd>Open Terminal as administrator and run DISM /Online /Cleanup-Image /StartComponentCleanup</dd>
+    <dt>In the app</dt><dd>None. Advice only.</dd>
+    <dt>Where it looks</dt><dd><ul><li><code>{DRIVE}\Windows\WinSxS</code></li></ul></dd>
+  </dl>
+</section>
+
+<div class="note"><span class="note-title">Missing a cache?</span><p>If you'd like Disk Heatmap to recognize another folder, <a href="https://github.com/Anuraj-dev/disk-space-heatmap/issues">open an issue on GitHub</a> with the app it belongs to and its path.</p></div>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="using.html"><span>Previous</span>Reading the map</a><a class="next" href="updating.html"><span>Next</span>Updating</a></nav>
+  </main>
+</div>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="../"><img class="mark" src="../assets/logo.svg" alt="" width="26" height="26"><span>Disk Heatmap</span></a>
+        <p>See what fills your Windows drive, and what's safe to clean. © 2026 Anuraj Jit Saikia.</p>
+      </div>
+      <div>
+        <h2>Docs</h2>
+        <ul>
+          <li><a href="getting-started.html">Getting started</a></li>
+          <li><a href="using.html">Reading the map</a></li>
+          <li><a href="cleanup.html">Cleanup rules</a></li>
+          <li><a href="updating.html">Updating</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="troubleshooting.html">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Project</h2>
+        <ul>
+          <li><a href="https://github.com/Anuraj-dev/disk-space-heatmap">Source on GitHub</a></li>
+          <li><a href="https://github.com/Anuraj-dev/disk-space-heatmap/releases">Releases</a></li>
+          <li><a href="https://github.com/Anuraj-dev/disk-space-heatmap/issues">Report a problem</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

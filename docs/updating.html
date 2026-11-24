@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Updating · Disk Heatmap</title>
+<meta name="description" content="How Disk Heatmap checks for, downloads, verifies and installs new versions, and how to update by hand.">
+<link rel="canonical" href="https://anuraj-dev.github.io/disk-space-heatmap/docs/updating.html">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#120d0e">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Disk Heatmap">
+<meta property="og:title" content="Updating · Disk Heatmap">
+<meta property="og:description" content="How Disk Heatmap checks for, downloads, verifies and installs new versions, and how to update by hand.">
+<meta property="og:url" content="https://anuraj-dev.github.io/disk-space-heatmap/docs/updating.html">
+<meta property="og:image" content="https://anuraj-dev.github.io/disk-space-heatmap/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../assets/fonts/mona-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js" defer></script>
+</head>
+<body class="docs">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../" aria-label="Disk Heatmap home">
+      <img class="mark" src="../assets/logo.svg" alt="" width="26" height="26">
+      <span>Disk Heatmap</span>
+    </a>
+    <nav aria-label="Main">
+      <ul class="site-nav">
+        <li class="hide-sm"><a href="../#how">How it works</a></li>
+        <li class="hide-sm"><a href="../#cleanup">Cleanup</a></li>
+        <li><a href="./" aria-current="true">Docs</a></li>
+        <li><a class="gh" href="https://github.com/Anuraj-dev/disk-space-heatmap"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="hide-sm">GitHub</span><span class="sr-only">Source on GitHub</span></a></li>
+        <li><a class="nav-cta" href="../#download">Download</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="wrap docs-layout">
+  <nav class="docs-nav" aria-label="Docs">
+    <details open data-docs-nav>
+      <summary>Docs: Updating</summary>
+      <div class="mark-row" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <h2>Start</h2><ul><li><a href="index.html">Overview</a></li><li><a href="getting-started.html">Getting started</a></li></ul><h2>Use</h2><ul><li><a href="using.html">Reading the map</a></li><li><a href="cleanup.html">Cleanup rules</a></li></ul><h2>Reference</h2><ul><li><a href="updating.html" aria-current="page">Updating</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul>
+    </details>
+  </nav>
+  <main id="main" class="doc">
+    <h1>Updating</h1>
+    <p class="lead">Disk Heatmap keeps itself up to date. A new version downloads quietly in the background and waits until you choose to install it.</p>
+    <nav class="toc" aria-labelledby="toc-h"><h2 id="toc-h">On this page</h2><ol><li><a href="#how">How it works</a></li><li><a href="#install">Installing an update</a></li><li><a href="#manual">Updating by hand</a></li><li><a href="#problems">If an update doesn't start</a></li></ol></nav>
+    <h2 id="how">How it works</h2>
+<ol>
+  <li>Each time Disk Heatmap starts, it asks GitHub whether a newer version has been released.</li>
+  <li>If there is one, it downloads the installer in the background while you keep working.</li>
+  <li>It checks the installer's signature against a key built into the app. An installer that doesn't match is never offered.</li>
+  <li>An <b>Update to X.Y.Z</b> button appears in the header.</li>
+</ol>
+<p>If you're offline, or the check fails for any other reason, nothing is shown and the app works as usual. It checks again the next time you open it.</p>
+
+<h2 id="install">Installing an update</h2>
+<p>Click <b>Update to X.Y.Z</b>. Disk Heatmap closes, the installer runs with a small progress window, and the new version opens. The button is unavailable while a scan is running.</p>
+<p>You don't have to update straight away. The button stays until you click it or close the app.</p>
+
+<h2 id="manual">Updating by hand</h2>
+<p>Download the newest installer and run it over your current version:</p>
+<p><a href="https://github.com/Anuraj-dev/disk-space-heatmap/releases/latest/download/Disk-Heatmap-Setup-x64.exe"><b>Download the latest Disk Heatmap</b></a></p>
+<p>Older versions and release notes are on the <a href="https://github.com/Anuraj-dev/disk-space-heatmap/releases">releases page</a>. The installer isn't code-signed yet, so Windows may show the SmartScreen prompt again; see <a href="getting-started.html#smartscreen">Getting started</a>.</p>
+
+<h2 id="problems">If an update doesn't start</h2>
+<p>If the installer can't start, Disk Heatmap says <em>The update couldn't start. Try again, or restart Disk Heatmap.</em> The downloaded update is kept, so the button stays and you can try again. If it keeps failing, <a href="#manual">update by hand</a>.</p>
+    <nav class="pager" aria-label="Previous and next"><a class="prev" href="cleanup.html"><span>Previous</span>Cleanup rules</a><a class="next" href="privacy.html"><span>Next</span>Privacy</a></nav>
+  </main>
+</div>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="../"><img class="mark" src="../assets/logo.svg" alt="" width="26" height="26"><span>Disk Heatmap</span></a>
+        <p>See what fills your Windows drive, and what's safe to clean. © 2026 Anuraj Jit Saikia.</p>
+      </div>
+      <div>
+        <h2>Docs</h2>
+        <ul>
+          <li><a href="getting-started.html">Getting started</a></li>
+          <li><a href="using.html">Reading the map</a></li>
+          <li><a href="cleanup.html">Cleanup rules</a></li>
+          <li><a href="updating.html">Updating</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="troubleshooting.html">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Project</h2>
+        <ul>
+          <li><a href="https://github.com/Anuraj-dev/disk-space-heatmap">Source on GitHub</a></li>
+          <li><a href="https://github.com/Anuraj-dev/disk-space-heatmap/releases">Releases</a></li>
+          <li><a href="https://github.com/Anuraj-dev/disk-space-heatmap/issues">Report a problem</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

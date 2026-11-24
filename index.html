@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Disk Heatmap: see what fills your Windows drive</title>
+<meta name="description" content="Disk Heatmap is a free Windows app that maps what fills a drive as a nested heat map and explains, in plain English, which caches are safe to clean.">
+<link rel="canonical" href="https://anuraj-dev.github.io/disk-space-heatmap/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#120d0e">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Disk Heatmap">
+<meta property="og:title" content="Disk Heatmap: see what fills your Windows drive">
+<meta property="og:description" content="A free Windows app that maps your drive as a nested heat map and says in plain English which caches are safe to clean.">
+<meta property="og:url" content="https://anuraj-dev.github.io/disk-space-heatmap/">
+<meta property="og:image" content="https://anuraj-dev.github.io/disk-space-heatmap/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Disk Heatmap: see what fills your drive, and what's safe to clean.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="assets/fonts/mona-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/site.css">
+<script>document.documentElement.classList.add("js")</script>
+<script src="assets/site.js" defer></script>
+<script src="assets/hero.js" defer></script>
+</head>
+<body class="home">
+<!--
+DIRECTION · Disk Heatmap site
+WORLD: the app icon is the system. Four heat tiles (crimson, orange, amber, cream) split by thin gutters; the page is laid out as that treemap, and the page ground shows through as the gutters.
+FIRST VIEWPORT: a crimson tile carries the promise and the download; beside it the real app runs in miniature: scan, map, hover, zoom, clean.
+TYPE: Mona Sans, stretched wide and heavy for headlines like labels packed into tiles; system UI inside the demo, as in the app.
+COLOR: committed heat ramp at page scale; app tile hues only inside app depictions.
+MOTION: one authored moment, the hero demo. Everything else stays still.
+-->
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Disk Heatmap home">
+      <img class="mark" src="assets/logo.svg" alt="" width="26" height="26">
+      <span>Disk Heatmap</span>
+    </a>
+    <nav aria-label="Main">
+      <ul class="site-nav">
+        <li class="hide-sm"><a href="#how">How it works</a></li>
+        <li class="hide-sm"><a href="#cleanup">Cleanup</a></li>
+        <li><a href="docs/">Docs</a></li>
+        <li><a class="gh" href="https://github.com/Anuraj-dev/disk-space-heatmap"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="hide-sm">GitHub</span><span class="sr-only">Source on GitHub</span></a></li>
+        <li><a class="nav-cta" href="#download">Download</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="tile tile-crimson hero-copy">
+        <h1 id="hero-title">See what fills your drive <span>and what's safe to clean</span></h1>
+        <p class="lede">Disk Heatmap scans a Windows drive and draws it as a heat map. Every folder and file is a rectangle sized by the space it takes, with folders drawn inside folders. Then it tells you, in plain English, which caches are safe to delete.</p>
+        <div class="cta-row">
+          <a class="btn btn-cream" href="https://github.com/Anuraj-dev/disk-space-heatmap/releases/latest/download/Disk-Heatmap-Setup-x64.exe">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 2v8.5M4.5 7 8 10.5 11.5 7M3 13.5h10"/></svg>
+            <span>Download for Windows <small>Disk-Heatmap-Setup-x64.exe</small></span>
+          </a>
+          <a class="btn btn-line" href="#how">How it works</a>
+        </div>
+        <p class="cta-note">Free. Windows 10 and 11, x64. The installer isn't code-signed yet, so Windows asks once: <a href="#smartscreen">here's what to click</a>.</p>
+      </div>
+
+      <figure class="demo" aria-labelledby="demo-caption">
+        <div class="tile demo-tile">
+          <div class="demo-stage" data-demo role="img" aria-label="Animated demo of Disk Heatmap with sample data. Drive C: is chosen and scanned while a counter ticks up. The drive appears as a nested treemap, folders drawn inside folders and tinted by kind. The pointer moves over tiles and the side panel shows each one's name and size. It clicks AppData and the map zooms in as the breadcrumbs update to C:, Users, you, AppData. In the Safe to clean list it opens npm package cache, clicks Clean and confirms; the hatched npm-cache tile shrinks away and the panel reports Freed 5.30 GB.">
+            <p class="demo-fallback">Sample scan of drive C: drawn as a nested treemap, with a Safe to clean list of caches beside it.</p>
+          </div>
+          <div class="demo-bar">
+            <p>Sample data from a made-up PC.</p>
+            <button class="demo-pause" type="button" aria-label="Pause the demo" aria-pressed="false" hidden>
+              <svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><rect x="4" y="3" width="2.6" height="10" rx="0.8" fill="currentColor"/><rect x="9.4" y="3" width="2.6" height="10" rx="0.8" fill="currentColor"/></svg>
+              <svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.2v9.6a.6.6 0 0 0 .9.5l7.4-4.8a.6.6 0 0 0 0-1L5.9 2.7a.6.6 0 0 0-.9.5z" fill="currentColor"/></svg>
+            </button>
+          </div>
+        </div>
+        <figcaption id="demo-caption" class="sr-only">The demo uses sample data for a made-up PC. Steps: scan, map, zoom, clean.</figcaption>
+      </figure>
+    </div>
+
+    <div class="wrap">
+      <ol class="rail" id="how" aria-label="How it works">
+        <li class="tile tile-crimson" data-step="scan">
+          <h2>Scan</h2>
+          <p>Pick a drive. Disk Heatmap walks every folder and shows its count as it goes.</p>
+          <span class="rail-bar" aria-hidden="true"><i></i></span>
+        </li>
+        <li class="tile tile-orange" data-step="map">
+          <h2>Map</h2>
+          <p>Folders draw inside folders, tinted by kind and deeper as they get bigger.</p>
+          <span class="rail-bar" aria-hidden="true"><i></i></span>
+        </li>
+        <li class="tile tile-amber" data-step="zoom">
+          <h2>Zoom</h2>
+          <p>Click a folder to zoom in. Back and Forward work like your browser.</p>
+          <span class="rail-bar" aria-hidden="true"><i></i></span>
+        </li>
+        <li class="tile tile-cream" data-step="clean">
+          <h2>Clean</h2>
+          <p>Known caches come with a verdict. Clean empties a safe one after you confirm.</p>
+          <span class="rail-bar" aria-hidden="true"><i></i></span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="map" aria-labelledby="map-title">
+    <div class="wrap map-grid">
+      <div class="section-copy">
+        <h2 id="map-title">Big things look big</h2>
+        <p class="section-lede">A scan turns the whole drive into one picture. Each rectangle's area is its size on disk, so the folder taking your space is the first thing you see.</p>
+        <dl class="legend-list">
+          <div>
+            <dt>Tint is the kind</dt>
+            <dd>
+              <ul class="kinds" aria-label="Kinds">
+                <li><i class="sw c-apps"></i>Apps</li>
+                <li><i class="sw c-games"></i>Games</li>
+                <li><i class="sw c-code"></i>Code</li>
+                <li><i class="sw c-cache"></i>Cache</li>
+                <li><i class="sw c-media"></i>Media</li>
+                <li><i class="sw c-docs"></i>Documents</li>
+                <li><i class="sw c-system"></i>System</li>
+              </ul>
+              Guessed from folder and file names. It's a hint, not a verdict.
+            </dd>
+          </div>
+          <div>
+            <dt>Depth of colour is size</dt>
+            <dd>Bigger tiles get deeper: darker in the light theme, lighter in the dark one, on a log scale from 100&nbsp;MB up to the folder on screen.</dd>
+          </div>
+          <div>
+            <dt><i class="sw hatch-safe"></i>Hatching marks what you can reclaim</dt>
+            <dd>Dense lines for <em>Safe to clean</em>, sparse lines for <em>Your call</em>.</dd>
+          </div>
+          <div>
+            <dt><i class="sw sw-small"></i>Small items fold away</dt>
+            <dd>Anything under 100&nbsp;MB joins one grey <em>N small items</em> tile per folder, so the map stays readable.</dd>
+          </div>
+        </dl>
+      </div>
+      <figure class="tile specimen">
+        <div class="specimen-map" data-specimen aria-hidden="true"></div>
+        <figcaption>Sample map of <code>C:\Users\you</code>, three levels deep. Hover a tile in the app and the side panel shows its name, size, share of the parent, file count and kind.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section-paper" id="cleanup" aria-labelledby="cleanup-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="cleanup-title">It knows what these folders are</h2>
+        <p class="section-lede">Disk Heatmap recognizes the caches and system files below. When it finds one on your drive, it says what it is, whether removing it is safe, and how to free the space. <a href="docs/cleanup.html">Every rule in detail</a>.</p>
+      </div>
+
+      <div class="verdicts">
+        <section class="verdict v-safe" aria-labelledby="v-safe">
+          <h3 id="v-safe" class="v-head"><span><i class="vmark vm-safe"></i>Safe to clean</span><span class="v-count">9 rules · Clean button</span></h3>
+          <ul class="rules">
+            <li><b>Your temporary files (%TEMP%)</b><span class="app">Windows</span><p>Scratch files programs leave behind. Files currently in use are skipped automatically.</p></li>
+            <li><b>npm package cache</b><span class="app">Node.js / npm</span><p>Copies of every package npm has downloaded. npm re-downloads what it needs on the next install.</p></li>
+            <li><b>NVIDIA shader cache (DXCache / GLCache)</b><span class="app">NVIDIA graphics driver</span><p>Compiled shaders the driver saves so games load faster. It is rebuilt automatically; the first launch of each game afterwards may stutter briefly.</p></li>
+            <li><b>NVIDIA App downloaded updates</b><span class="app">NVIDIA App</span><p>Installer packages the NVIDIA App already downloaded and applied. Old ones are not needed once the update is installed.</p></li>
+            <li><b>Recycle Bin</b><span class="app">Windows</span><p>Files you already deleted. They still take space until the bin is emptied.</p></li>
+            <li><b>Application crash dumps</b><span class="app">Windows</span><p>Memory snapshots saved when programs crashed. Only useful if you are sending them to a developer.</p></li>
+            <li><b>VS Code cached extension installers</b><span class="app">Visual Studio Code</span><p>Old extension installers and web caches VS Code keeps around. Your installed extensions and settings are not here.</p></li>
+            <li><b>Ubisoft Connect patch &amp; cache files</b><span class="app">Ubisoft Connect</span><p>Downloaded launcher/game patches and cached data that have already been applied. Your installed games and saves live elsewhere.</p></li>
+            <li><b>Logitech G HUB update cache</b><span class="app">Logitech G HUB</span><p>Downloaded firmware and update packages G HUB has already installed. Your device profiles are stored separately.</p></li>
+          </ul>
+        </section>
+
+        <section class="verdict v-call" aria-labelledby="v-call">
+          <h3 id="v-call" class="v-head"><span><i class="vmark vm-call"></i>Your call</span><span class="v-count">advice only</span></h3>
+          <ul class="rules">
+            <li><b>Chrome on-device AI model</b><span class="app">Google Chrome</span><p>A local AI model (Gemini Nano) Chrome downloads for features like “Help me write”. Deleting it alone doesn't help: Chrome downloads it again. Turn the feature off in <code>chrome://flags</code> first.</p></li>
+          </ul>
+        </section>
+
+        <section class="verdict v-keep" aria-labelledby="v-keep">
+          <h3 id="v-keep" class="v-head"><span><i class="vmark vm-keep"></i>Managed by Windows</span><span class="v-count">advice only</span></h3>
+          <ul class="rules">
+            <li><b>Page file</b><span class="app">pagefile.sys / swapfile.sys</span><p>Virtual memory Windows uses when RAM is full. Removing it can cause crashes, so leave it.</p></li>
+            <li><b>Hibernation file</b><span class="app">hiberfil.sys</span><p>If you never hibernate, <code>powercfg /h off</code> in an administrator Terminal removes it, and also turns off Fast Startup.</p></li>
+            <li><b>Windows component store</b><span class="app">WinSxS</span><p>Deleting files here breaks Windows. <code>DISM /Online /Cleanup-Image /StartComponentCleanup</code> trims it safely.</p></li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="safety" aria-labelledby="safety-title">
+    <div class="wrap safety-grid">
+      <div class="section-copy">
+        <h2 id="safety-title">Nothing goes until you've seen what goes</h2>
+        <ul class="checks">
+          <li><b>Clean only appears on safe rules.</b> <em>Your call</em> and <em>Managed by Windows</em> items explain how to free the space yourself instead.</li>
+          <li><b>It always asks first,</b> right in the list, with the size and the number of files.</li>
+          <li><b>It empties the folder and keeps it.</b> Files that are in use are skipped.</li>
+          <li><b>It checks the path again before deleting.</b> The app works out each cache's location itself, so nothing on screen can point a delete somewhere else.</li>
+          <li><b>The Recycle Bin can be emptied too,</b> with a reminder that it can't be restored afterwards.</li>
+        </ul>
+      </div>
+      <div class="tile confirm-tile" aria-label="Example of the confirm step in the cleanup list">
+        <div class="mock-panel" aria-hidden="true">
+          <div class="mock-row open"><span class="t">npm package cache</span><span class="s">5.30 GB</span><span class="p">C:\Users\you\AppData\Local\npm-cache</span></div>
+          <div class="mock-detail">
+            <p>Copies of every package npm has downloaded. npm re-downloads what it needs on the next install.</p>
+            <div class="mock-confirm">
+              <p>Permanently delete <b>5.30 GB</b> (48,213 files)? The folder stays; files in use are skipped.</p>
+              <div class="mock-actions"><span class="mbtn">Cancel</span><span class="mbtn danger">Clean</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="mock-note">The confirm step, as it appears in the app (sample figures).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper" id="keys" aria-labelledby="keys-title">
+    <div class="wrap keys-grid">
+      <div class="section-copy">
+        <h2 id="keys-title">Moves like your browser</h2>
+        <p class="section-lede">Every folder you open goes into a history, so you can wander into <code>AppData</code> and come straight back. The mouse side buttons work too.</p>
+      </div>
+      <dl class="keys">
+        <div><dt><kbd>Alt</kbd> <kbd>←</kbd> <kbd>Alt</kbd> <kbd>→</kbd></dt><dd>Back and Forward, like Chrome. Also the header arrows and the mouse side buttons.</dd></div>
+        <div><dt><kbd>Backspace</kbd> or <kbd>Alt</kbd> <kbd>↑</kbd></dt><dd>Up to the parent folder.</dd></div>
+        <div><dt><kbd>[</kbd> <kbd>]</kbd></dt><dd>Fewer or more levels of folders inside folders, from 1 to 6. Starts at 3.</dd></div>
+        <div><dt>Click a folder</dt><dd>Zoom into it. The breadcrumbs jump back to any parent.</dd></div>
+        <div><dt>Click a file, or right-click anything</dt><dd>Show it in File Explorer.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" id="privacy" aria-labelledby="privacy-title">
+    <div class="wrap private-grid">
+      <div class="tile tile-orange private-main">
+        <h2 id="privacy-title">Your files stay on your PC</h2>
+        <p>Scanning happens entirely on your computer. There's no account and no telemetry. The one thing Disk Heatmap asks the internet is whether a new version is out.</p>
+        <p><a href="docs/privacy.html">Privacy in detail</a></p>
+      </div>
+      <div class="tile tile-amber private-side">
+        <h3>It keeps itself current</h3>
+        <p>When it starts, Disk Heatmap checks GitHub for a new version, downloads it in the background and verifies its signature. An <b>Update to X.Y.Z</b> button then appears in the header. Click it to install and restart.</p>
+        <p><a href="docs/updating.html">About updates</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section download" id="download" aria-labelledby="download-title">
+    <div class="wrap download-grid">
+      <div class="tile tile-crimson download-main">
+        <h2 id="download-title">Get Disk Heatmap</h2>
+        <p>For Windows 10 and 11 on x64. If your PC doesn't have WebView2 yet, the installer fetches it.</p>
+        <div class="cta-row">
+          <a class="btn btn-cream" href="https://github.com/Anuraj-dev/disk-space-heatmap/releases/latest/download/Disk-Heatmap-Setup-x64.exe">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 2v8.5M4.5 7 8 10.5 11.5 7M3 13.5h10"/></svg>
+            <span>Download for Windows <small>Disk-Heatmap-Setup-x64.exe</small></span>
+          </a>
+        </div>
+        <p class="small">Every version is on the <a href="https://github.com/Anuraj-dev/disk-space-heatmap/releases">releases page</a>. <span class="os-hint" data-os-hint hidden>You're not on Windows right now; grab it from your PC.</span></p>
+      </div>
+      <div class="tile tile-cream smartscreen" id="smartscreen">
+        <h3>Windows will ask once</h3>
+        <p>The installer isn't code-signed yet, so SmartScreen shows <b>“Windows protected your PC”</b> when you open it. That's expected for an unsigned app.</p>
+        <ol class="ss-steps">
+          <li>
+            <div class="ss-card" aria-hidden="true"><span class="ss-title">Windows protected your PC</span><span class="ss-line"></span><span class="ss-line short"></span><span class="ss-link">More info</span><span class="ss-btn">Don't run</span></div>
+            <p>Click <b>More info</b>.</p>
+          </li>
+          <li>
+            <div class="ss-card" aria-hidden="true"><span class="ss-title">Windows protected your PC</span><span class="ss-line"></span><span class="ss-meta">App: Disk-Heatmap-Setup-x64.exe</span><span class="ss-btns"><span class="ss-btn hot">Run anyway</span><span class="ss-btn">Don't run</span></span></div>
+            <p>Click <b>Run anyway</b>.</p>
+          </li>
+        </ol>
+        <p class="small"><a href="docs/getting-started.html#smartscreen">Installing, step by step</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper" id="faq" aria-labelledby="faq-title">
+    <div class="wrap faq-grid">
+      <h2 id="faq-title">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Is it free?</summary>
+          <p>Yes. Disk Heatmap is free to download and use, and its <a href="https://github.com/Anuraj-dev/disk-space-heatmap">source is on GitHub</a>.</p>
+        </details>
+        <details>
+          <summary>Will it delete anything on its own?</summary>
+          <p>No. It deletes only when you click Clean on a <em>Safe to clean</em> item and then confirm. Everything else on screen is advice.</p>
+        </details>
+        <details>
+          <summary>Why does Windows warn me about the installer?</summary>
+          <p>The installer isn't code-signed yet. In the “Windows protected your PC” window, click <b>More info</b>, then <b>Run anyway</b>.</p>
+        </details>
+        <details>
+          <summary>Why don't the sizes match what Explorer says?</summary>
+          <p>Disk Heatmap adds up logical file sizes. Hard-linked files, which make up much of <code>WinSxS</code>, are counted each time they appear, so that folder looks bigger than the space it really uses. OneDrive files that live only in the cloud count as 0&nbsp;bytes, and symlinks and junctions are skipped.</p>
+        </details>
+        <details>
+          <summary>It says some folders were unreadable. What's missing?</summary>
+          <p>Folders that need administrator rights are skipped, and the count appears above the map. Run Disk Heatmap as administrator to include them.</p>
+        </details>
+        <details>
+          <summary>Does it work on a Mac or Linux?</summary>
+          <p>No. Disk Heatmap is a Windows app, for Windows 10 and 11 on x64.</p>
+        </details>
+        <details>
+          <summary>Does it send anything about my files?</summary>
+          <p>No. The scan never leaves your PC. The only network request is the update check to GitHub. <a href="docs/privacy.html">Privacy</a> has the details.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="./"><img class="mark" src="assets/logo.svg" alt="" width="26" height="26"><span>Disk Heatmap</span></a>
+        <p>See what fills your Windows drive, and what's safe to clean. © 2026 Anuraj Jit Saikia.</p>
+      </div>
+      <div>
+        <h2>Docs</h2>
+        <ul>
+          <li><a href="docs/getting-started.html">Getting started</a></li>
+          <li><a href="docs/using.html">Reading the map</a></li>
+          <li><a href="docs/cleanup.html">Cleanup rules</a></li>
+          <li><a href="docs/updating.html">Updating</a></li>
+          <li><a href="docs/privacy.html">Privacy</a></li>
+          <li><a href="docs/troubleshooting.html">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Project</h2>
+        <ul>
+          <li><a href="https://github.com/Anuraj-dev/disk-space-heatmap">Source on GitHub</a></li>
+          <li><a href="https://github.com/Anuraj-dev/disk-space-heatmap/releases">Releases</a></li>
+          <li><a href="https://github.com/Anuraj-dev/disk-space-heatmap/issues">Report a problem</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

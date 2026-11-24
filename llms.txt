@@ -1,0 +1,20 @@
+# Disk Heatmap
+
+> Disk Heatmap is a free Windows 10/11 (x64) app that scans a drive and draws it as a nested heat map: every folder and file is a rectangle sized by the space it takes, with folders drawn inside folders. It recognizes common caches and system files, explains each in plain English with a verdict (Safe to clean, Your call, Managed by Windows), and can empty the safe ones after asking. Scanning is local; the only network request is the update check. No account, no telemetry.
+
+Installer: https://github.com/Anuraj-dev/disk-space-heatmap/releases/latest/download/Disk-Heatmap-Setup-x64.exe (NSIS; fetches WebView2 if missing). It is not code-signed yet, so SmartScreen shows "Windows protected your PC": click More info, then Run anyway.
+
+## Docs
+
+- [Overview](https://anuraj-dev.github.io/disk-space-heatmap/docs/): what Disk Heatmap does, at a glance
+- [Getting started](https://anuraj-dev.github.io/disk-space-heatmap/docs/getting-started.html): requirements, download, the SmartScreen prompt, install, first scan, running as administrator, uninstalling
+- [Reading the map](https://anuraj-dev.github.io/disk-space-heatmap/docs/using.html): tile size, tint, heat and hatching, small items, the side panel, keys and mouse, depth, rescan
+- [Cleanup rules](https://anuraj-dev.github.io/disk-space-heatmap/docs/cleanup.html): verdicts, exactly what Clean does, the Recycle Bin, and every rule with its paths
+- [Troubleshooting](https://anuraj-dev.github.io/disk-space-heatmap/docs/troubleshooting.html): SmartScreen, WebView2, unreadable folders, sizes that differ from Explorer, skipped files
+
+## Optional
+
+- [Updating](https://anuraj-dev.github.io/disk-space-heatmap/docs/updating.html): automatic updates, signature check, updating by hand
+- [Privacy](https://anuraj-dev.github.io/disk-space-heatmap/docs/privacy.html): what stays on the PC, and the one network request
+- [Releases](https://github.com/Anuraj-dev/disk-space-heatmap/releases)
+- [Source on GitHub](https://github.com/Anuraj-dev/disk-space-heatmap)
