@@ -320,7 +320,7 @@ export default function App() {
       {view.kind === "scanning" && (
         <main className="scanning">
           <h1>
-            Scanning <span className="mono">{view.drive.mount}</span>
+            Scanning {view.drive.mount}
           </h1>
           <div className="scan-big">
             {formatBytes(progress?.bytes ?? 0)}
@@ -338,7 +338,7 @@ export default function App() {
             <div><dt>Folders</dt><dd>{formatCount(progress?.dirs ?? 0)}</dd></div>
             <div><dt>Elapsed</dt><dd>{((progress?.elapsed_ms ?? 0) / 1000).toFixed(1)} s</dd></div>
           </dl>
-          <div className="scan-path mono" title={progress?.current}>{progress?.current || "Starting…"}</div>
+          <div className="scan-path" title={progress?.current}>{progress?.current || "Starting…"}</div>
           <button onClick={() => invoke("cancel_scan")}>Stop and show results so far</button>
         </main>
       )}
