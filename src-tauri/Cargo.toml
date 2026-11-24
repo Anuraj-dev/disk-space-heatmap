@@ -1,6 +1,6 @@
 [package]
 name = "disk-heatmap"
-version = "0.1.0"
+version = "0.2.0"
 description = "See what fills your drive and what is safe to clean"
 edition = "2021"
 
