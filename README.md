@@ -2,6 +2,8 @@
 
 A small Windows app (Tauri 2 + Rust + React) that shows what is filling a drive as a heat map and explains, in plain English, what is safe to delete.
 
+**Download and docs:** https://anuraj-dev.github.io/disk-space-heatmap/
+
 ## Run it
 
 ```powershell
@@ -50,3 +52,7 @@ Add an entry to `src-tauri/rules.json` and restart. Use `"action": "delete_conte
 - Sizes are logical file sizes; hard links (WinSxS) are counted more than once.
 - Folders you can't read without admin rights are skipped (the count appears above the map).
 - Next: read the NTFS MFT directly when running as admin, for WizTree-style scans that finish in seconds.
+
+## License
+
+[MIT](LICENSE)
