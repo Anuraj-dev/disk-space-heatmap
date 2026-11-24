@@ -209,7 +209,7 @@ function Worth({
                 </button>
                 {i.can_delete && (
                   <button className="danger-outline" onClick={() => setConfirm(i.path)}>
-                    {i.rule.action === "empty_recycle_bin" ? "Empty bin…" : "Clean…"}
+                    {i.rule.action === "empty_recycle_bin" ? "Empty bin" : "Clean"}
                   </button>
                 )}
               </div>
